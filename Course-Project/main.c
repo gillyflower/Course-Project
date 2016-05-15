@@ -14,18 +14,19 @@
 
 
 #include <stdio.h>
-#include <ctype.h>              // Needed to use toupper
-#include <string.h>             // Needae for strlen
-#include "CDdata.h"             // The header file
+#include <ctype.h>                                      /* Needed to use toupper */
+#include <string.h>                                     /* Needae for strlen */
+#include "CDdata.h"                                     /* The header file */
 
 
 
+                                        /* ------ Print to Screen -------*/
 
 int output (char title[], char artist[], int tracks, int album, float price)
 {
-    puts ("=======================================");                   /* Note puts automatically adds a newline to the output */
+    puts ("=======================================");    /* Note puts automatically adds a newline to the output */
     printf ("Title: %s\n", title);
-#ifndef NOARTIST                                                        /* Think this is a MACRO. I need to check this */
+#ifndef NOARTIST                                         /* Think this is a MACRO. I need to check this */
     printf ("Artist: %s\n", artist);
 #endif
     printf ("Number of Tracks: %d\n", tracks);
@@ -33,61 +34,61 @@ int output (char title[], char artist[], int tracks, int album, float price)
     printf ("Price: %.2f\n", price);
     puts ("========================================\n");
     
-    return 0;                               /* NOTE: Mark shows no retun value but the compiler requires it 
-                                             (control reaches end of non void function) so I am retuning 0 */
+    return 0;                                       /* NOTE: Mark shows no retun value but the compiler requires it
+                                                     (control reaches end of non void function) so I am retuning 0 */
 }
 
-/* Prompt the user for input and ask them to press enter */
+                                        /* ------ Prompt User -------*/
 
 int enter (char prompt [])
 {
-    char buff[BUFSIZ];                      /*Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
+    char buff[BUFSIZ];                              /*Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     
     
-    fputs (prompt, stdout);                 /* Prints the passed in prompt to the screen. */
-    fgets( buff, sizeof buff, stdin );      /* I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character! */
-    sscanf( buff, "%*c");                   /* scan the keyboard buffer and throw awway the characters you find */
+    fputs (prompt, stdout);                         /* Prints the passed in prompt to the screen. */
+    fgets( buff, sizeof buff, stdin );              /* I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character! */
+    sscanf( buff, "%*c");                           /* scan the keyboard buffer and throw awway the characters you find */
     
-    return 0;                               /* NOTE: Mark shows no retun value but the compiler requires it 
-                                             (control reaches end of non void function) so I am retuning 0 */
+    return 0;                                       /* NOTE: Mark shows no retun value but the compiler requires it
+                                                     (control reaches end of non void function) so I am retuning 0 */
 }
 
 
-/* Ask the user a question and prompt for a Y or N (y or n) answer. No other answer will be acceptable. */
-/* Function returns 1 for a Y and 0 for a N. */
+                                        /* ------ Read Yes No -------*/
 
-int yesNo (char prompt [])                  /* EXAMPLE SAYS IT NEEDS TO BE AN INTEGER FUNCTION
-                                             Prompt string to be passed in. Should not include a question mark. */
+                                                    /* Returns 1 for a Y and 0 for a N. */
+int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO BE AN INTEGER FUNCTION
+                                                     Prompt string to be passed in. Should not include a question mark. */
 
 {
     
     
-    char buff[BUFSIZ];                      /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
+    char buff[BUFSIZ];                              /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     char answer;
     
-                                            /* Read user input and loop until correct input given */
+                                                    /* Read user input and loop until correct input given */
     for (; ;)
         
     {
-        fputs (prompt, stdout);             /* Display the question to the user. */
-        fputs (" Y/N? ", stdout);           /* Add a space and then a helpful prompt to the string passed in. */
+        fputs (prompt, stdout);                     /* Display the question to the user. */
+        fputs (" Y/N? ", stdout);                   /* Add a space and then a helpful prompt to the string passed in. */
         
         
         fgets( buff, sizeof buff, stdin );
-        sscanf( buff, " %[^\n]", &answer );  /*ANSWER HERE IS A POINTER? */
+        sscanf( buff, " %[^\n]", &answer );         /*ANSWER HERE IS A POINTER? */
         
         
         
         
         
         
-                                            /* Process the Answer */
+                                                    /* Process the Answer */
         
-        answer = toupper (answer);          /* Convert to uppercase. */
+        answer = toupper (answer);                  /* Convert to uppercase. */
         if (answer == 'Y')
-            return 1;                       /* Return is called here not at the end of the function! This is aparently fine to do. */
-                                            /*"else" is not required here. WHY?? */
-        if (answer == 'N')                  /* "else" is not required here either. WHY?? */
+            return 1;                               /* Return is called here not at the end of the function! This is aparently fine to do. */
+                                                    /*"else" is not required here. WHY?? */
+        if (answer == 'N')                          /* "else" is not required here either. WHY?? */
             return 0;
         
         
@@ -95,19 +96,20 @@ int yesNo (char prompt [])                  /* EXAMPLE SAYS IT NEEDS TO BE AN IN
         
         printf("Error - only 'y/Y' or 'n/N' are allowed\n");    /* Error prompt on incorrect user input. */
         
-                                                                /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
-                                                                "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
-                                                                /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk.
-                                                                 Somehow this is getting put into bad memory addresses or something */
+                                                    /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
+                                                    "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
+                                                    /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk.
+                                                    Somehow this is getting put into bad memory addresses or something */
     }
     
 }
 
 
-/* Read Integer. The simple version. */
-/* I was having a problem for a long time that yesNo would fail and skip ahead every second call. I traced it to a newline being left from this integer read */
-/* Ask the user a question and read an integer answer from the keyboard. */
-/* This now works because while((c = getchar()) != '\n' && c != EOF); */
+                                        /* ------ Read Integer -------*/
+
+                                                    /* I was having a problem for a long time that yesNo would fail and skip ahead every second call.
+                                                     I traced it to a newline being left from this integer read */
+                                                    /* This now works because while((c = getchar()) != '\n' && c != EOF); */
 
 int readIntA (char prompt [])
 {
@@ -123,9 +125,9 @@ int readIntA (char prompt [])
     return answer;
 }
 
-/* Read Integer. The more complicated version. */
+                                        /* ------ Read Integer -------*/
+
                                                     /* Im not using this one as the simpler version works */
-                                                    /* Ask the user a question and read an integer answer from the keyboard. */
 
 int readIntB (char prompt [])
 {
@@ -140,7 +142,7 @@ int readIntB (char prompt [])
 }
 
 
-/* Ask the user a question and read a floating point answer from the keyboard. */
+                                        /* ------ Read Float -------*/
 
 
 float readFloat (char prompt [])
@@ -154,9 +156,9 @@ float readFloat (char prompt [])
     
     return answer;
 }
+                                        /* ------ Resd String -------*/
 
 
-/* Ask the user to enter a string. */
                                                     /* In the provided solution Mark Virtue is using an entirely different construct
                                                      which involves calling the function trimnewline and passing in the 'answer' variable from this function.
                                                      He is also using the parameter "MAX" to set the max read length. We dont need this as we are using "BUFSIZ" */
@@ -175,90 +177,80 @@ int readString (char prompt [], char answer[])      /* Functions cant return a s
 }
 
 
-                                        /* Main Function */
+                                        /* ------ Main Function -------*/
 
 int main()
 
 {
     
-    char title [NO_CDS][TITLE_SIZE+1];     // Array of arrays for title
+    char title [NO_CDS][TITLE_SIZE+1];              /* Array of arrays for title */
 #ifndef NOARTIST
-    char artist [NO_CDS][ARTIST_SIZE+1];    // Array of arrays for artist
+    char artist [NO_CDS][ARTIST_SIZE+1];            /* Array of arrays for artist */
 #endif
-    int tracks [NO_CDS];         // number of tracks on the album
-    int album [NO_CDS];          // boolean - is album?
-    float price [NO_CDS];        // float because it has decimal places
-    int count =0;             // The loop counter for inputting the CD details
-    int i;                    // The loop counter for outputting the CD details
+    int tracks [NO_CDS];                            /* number of tracks on the album */
+    int album [NO_CDS];                             /* boolean - is album? */
+    float price [NO_CDS];                           /* float because it has decimal places */
+    int count =0;                                   /* The loop counter for inputting the CD details */
+    int i;                                          /* The loop counter for outputting the CD details */
     
     
     puts ("============================\n");
     puts ("Welcome to the CD Database. \n");
-    printf ("You can store up to %lu CDs. \n", sizeof price/ sizeof price [0]); //COMPILER WARNING: Required unsigned long (lu) because of "sizeof". Was int (%d).
+    printf ("You can store up to %lu CDs. \n", sizeof price/ sizeof price [0]); /* Compiler Required unsigned long (lu) because of "sizeof". Was int (%d) */
     puts ("============================\n\n\n");
     
-    // Loop until the user does not want to enter more CDs
     
-    for (; ;)                                                       //forever loop
-    {
-        // Ask if the user want to enter another CD?
-        
-        if (!yesNo("Have you any more CDs to enter"))             // If not return value from yesNo == 1 (eg it equals 0) then break.
+    
+    for (; ;)                                                       /* forever loop until the user does not want to enter more CDs*/
+    {                                                               /* Ask if the user want to enter another CD? */
+        if (!yesNo("Have you any more CDs to enter"))               /* If not return value from yesNo == 1 (eg it equals 0) then break. */
             
             break;
         
         puts ("\n\n");
         printf ("Please enter the details of CD %d...\n\n", count+1);
         
-        // Read in the details of the CD.
-        
-        
+                                                                    /* Read in the details of the CD. */
         readString ("Title?", title[count]);
 #ifndef NOARTIST
         readString ("Artist?", artist[count]);
 #endif
-        tracks [count] = readIntA("Number of tracks?");           // Pass in the question we want to ask "Number of tracks" and readIntA will echo this to the user and return
-        // their input to "tracks"
-        album [count] = yesNo ("Is the CD an Album");               // Note there is no question mark and space here as the function is doing that for us. This is just to show
-        // it can be done that way.
-        
+        tracks [count] = readIntA("Number of tracks?");             /* Pass in the question we want to ask "Number of tracks"
+                                                                     and readIntA will echo this to the user and return their input to "tracks"*/
+        album [count] = yesNo ("Is the CD an Album");               /* Note there is no question mark and space here as the function is doing that for us.
+                                                                     This is just to show it can be done that way. */
         price [count] = readFloat ("Retail price (e.g. 4,95)? ");
         
-        /* Check to see if we have filled up the allocated array space. */
-        
-        if (++count == NO_CDS)      /* NOTE: The increment happens before the test. */
+                                                                    /* Check to see if we have filled up the allocated array space. */
+        if (++count == NO_CDS)                                      /* NOTE: The increment happens before the test. */
         {
             enter ("You have reached the storage limit\n"
-                   "Press ENTER to continue: ");           /* NOTE: It is possible to separate two strings with a carriage return (to make the code more readable)
-                                                            if each string is surrounded by "" and they will print as one string. */
+                   "Press ENTER to continue: ");                    /* NOTE: It is possible to separate two strings with a carriage return 
+                                                                     (to make the code more   readable) if each string is surrounded by "" and they will print as one string. */
             break;
         }
     }
-    
-    
-    // we print all the CDs to the screen
+                                                                    /* we print all the CDs to the screen */
     
     for (i =0; i< count; i++)
     {
         
         printf ("\nThe details of CD number %d:\n", i+1);
-        puts ("=======================================");                   // Note puts automatically adds a newline to the output
+        puts ("=======================================");                   /* Note puts automatically adds a newline to the output */
         
         output (title[i], artist[i], tracks[i], album[i], price[i]);
         if (i< count -1)
             puts ("========================================\n");
         
-        if (i< count -1)                                                    // If there are  more stored entries to see...
+        if (i< count -1)                                                    /* If there are  more stored entries to see... */
         {
             enter ("Please press return to see the next entry");
             
         }
         
     }
-    
-    
-    // Print a user friendly way to exit the program (note I dont know if this will work as we are not going to use the depreciated getchar to end. Yes it works)
-    
+                                                                            /* Print a user friendly way to exit the program 
+                                                                             (note we are not going to use the depreciated getchar to end.) */
     enter ("Please press return to exit the program");
     
     puts ("Bye :)\n");
