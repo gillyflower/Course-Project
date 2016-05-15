@@ -24,7 +24,7 @@
 
 int output (char title[], char artist[], int tracks, int album, float price)
 {
-    puts ("=======================================");    /* Note puts automatically adds a newline to the output */
+    puts ("=======================================");    /* Note puts automatically adds a newline to the output. */
     printf ("Title: %s\n", title);
 #ifndef NOARTIST                                         /* Think this is a MACRO. I need to check this */
     printf ("Artist: %s\n", artist);
