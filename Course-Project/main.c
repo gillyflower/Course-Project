@@ -44,7 +44,6 @@ int enter (char prompt [])
 {
     char buff[BUFSIZ];                              /*Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     
-    
     fputs (prompt, stdout);                         /* Prints the passed in prompt to the screen. */
     fgets( buff, sizeof buff, stdin );              /* I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character! */
     sscanf( buff, "%*c");                           /* scan the keyboard buffer and throw awway the characters you find */
@@ -61,38 +60,23 @@ int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO 
                                                      Prompt string to be passed in. Should not include a question mark. */
 
 {
-    
-    
     char buff[BUFSIZ];                              /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     char answer;
     
-                                                    /* Read user input and loop until correct input given */
-    for (; ;)
-        
-    {
+    for (; ;)                                       /* Read user input and loop until correct input given */
+        {
         fputs (prompt, stdout);                     /* Display the question to the user. */
         fputs (" Y/N? ", stdout);                   /* Add a space and then a helpful prompt to the string passed in. */
-        
-        
         fgets( buff, sizeof buff, stdin );
         sscanf( buff, " %[^\n]", &answer );         /*ANSWER HERE IS A POINTER? */
         
-        
-        
-        
-        
-        
                                                     /* Process the Answer */
-        
         answer = toupper (answer);                  /* Convert to uppercase. */
         if (answer == 'Y')
             return 1;                               /* Return is called here not at the end of the function! This is aparently fine to do. */
                                                     /*"else" is not required here. WHY?? */
         if (answer == 'N')                          /* "else" is not required here either. WHY?? */
             return 0;
-        
-        
-        
         
         printf("Error - only 'y/Y' or 'n/N' are allowed\n");    /* Error prompt on incorrect user input. */
         
@@ -113,14 +97,12 @@ int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO 
 
 int readIntA (char prompt [])
 {
-    
     int answer;
     int c;
     
     fputs (prompt, stdout);                         /* Display the question to the user. */
     scanf( "%d", &answer );                         /* Trying %d and ^\n here as I am looking for an integer. */
     while((c = getchar()) != '\n' && c != EOF);     /* Using this to eat the newline. It loops until it finds either a newline/return or EOF */
-    
     
     return answer;
 }
