@@ -1,71 +1,16 @@
-//
-//  main.c
-//  Course Project Chapter 10_with_functions
-//
-//  Created by Orval on 14.05.16.
-//  Copyright (c) 2016 Gillian Holt. All rights reserved.
-//
 
-//
-//  main.c
-//  Course Project Chapter 10
-//
-//  Created by Orval on 24.04.16.
-//  Copyright (c) 2016 Gillian Holt. All rights reserved.
-//
+/*  main.c
+  Course Project Chapter 10_with_functions
 
-//The fflush/scanf Problem:
-/*First line of man fflush reads: The function fflush() forces a write of all user-space buffered data for the given output or update stream. cnicutar has the right answer for how to skip unwanted input, but in addition to that you should read the docs of the functions you're using. And check their return value... as your call above will have returned EOF and set errno = EBADF to signal your wrongful use of the function. Ignoring return values is bad, bad, bad */
-
-/*This is well explained in the C FAQ. See also: explanation. The proposed solutions:
- 
- Quit using scanf. Use fgets and the sscanf
- Use this to eat the newline
- 
- while((c = getchar()) != '\n' && c != EOF);  discards the character
- The fact that flushing stdin works on some implementations is wrong.
- 
- Some vendors do implement fflush so that fflush(stdin) discards unread characters, although portable programs cannot depend on this.*/
-
-/*
- I also found this -
- int myint;
- char buff[BUFSIZ];
- fgets( buff, sizeof buff, stdin );
- sscanf( buff, "%d", &myint );
- */
-
-// This last one works but it ignores everything after the first space. Solution is to use "%[^\n]"
-
-/* The C library function char *fgets(char *str, int n, FILE *stream) reads a line from the specified stream and stores it into the string pointed to by str. It stops when either (n-1) characters are read, the newline character is read, or the end-of-file is reached, whichever comes first.
- 
- Declaration
- Following is the declaration for fgets() function.
- 
- char *fgets(char *str, int n, FILE *stream)
- Parameters
- str -- This is the pointer to an array of chars where the string read is stored.
- 
- n -- This is the maximum number of characters to be read (including the final null-character). Usually, the length of the array passed as str is used.
- 
- stream -- This is the pointer to a FILE object that identifies the stream where characters are read from. */
+  Created by Orval on 14.05.16.
+  Copyright (c) 2016 Gillian Holt. All rights reserved.
+*/
 
 
 
-// 21.02.2016 New Version to allow storage of up to 100 cds
+/* 21.02.2016 New Version to allow storage of up to 100 cds */
+/* 24.04.2016 Split into functions */
 
-
-
-
-// 24.04.2016 Split into functions
-// Create function called "output" to display details of one cd
-// Create function called "enter" which takes one parameter - a string - which displays that string then waits for the user to press ENTER
-// Create a function callled "yesno" that - like enter - displays its string parameter the reads one character from the keyboard until that char is a Y or a N then returns a value of 1 or 0
-//Create a function "readInt"
-//Create a function "readFloat"
-//Create a function "readString" (Note that functions cannot return arrays but that array parameters can be modified by the function)
-// Create a function to trim the newline character if there is one.
-// Create a prototype for each function and put them in the header file
 
 
 #include <stdio.h>
