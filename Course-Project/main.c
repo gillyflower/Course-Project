@@ -23,9 +23,9 @@
 
 int output (char title[], char artist[], int tracks, int album, float price)
 {
-    puts ("=======================================");                   // Note puts automatically adds a newline to the output
+    puts ("=======================================");                   /* Note puts automatically adds a newline to the output */
     printf ("Title: %s\n", title);
-#ifndef NOARTIST                                                        // Think this is a MACRO. I need to check this
+#ifndef NOARTIST                                                        /* Think this is a MACRO. I need to check this */
     printf ("Artist: %s\n", artist);
 #endif
     printf ("Number of Tracks: %d\n", tracks);
@@ -33,80 +33,78 @@ int output (char title[], char artist[], int tracks, int album, float price)
     printf ("Price: %.2f\n", price);
     puts ("========================================\n");
     
-    return 0;                               // NOTE: Mark shows no retun value but the compiler requires it (control reaches end of non void function) so I am retuning 0
+    return 0;                               /* NOTE: Mark shows no retun value but the compiler requires it 
+                                             (control reaches end of non void function) so I am retuning 0 */
 }
 
-// enter ()
-// Prompt the user for input and ask them to press enter
+/* Prompt the user for input and ask them to press enter */
 
 int enter (char prompt [])
 {
-    char buff[BUFSIZ];                      //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h>
+    char buff[BUFSIZ];                      /*Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     
     
-    fputs (prompt, stdout);                 // Prints the passed in prompt to the screen.
-    fgets( buff, sizeof buff, stdin );      // I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character!
-    sscanf( buff, "%*c");                   //scan the keyboard buffer and throw awway the characters you find
+    fputs (prompt, stdout);                 /* Prints the passed in prompt to the screen. */
+    fgets( buff, sizeof buff, stdin );      /* I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character! */
+    sscanf( buff, "%*c");                   /* scan the keyboard buffer and throw awway the characters you find */
     
-    return 0;                               // NOTE: Mark shows no retun value but the compiler requires it (control reaches end of non void function) so I am retuning 0
+    return 0;                               /* NOTE: Mark shows no retun value but the compiler requires it 
+                                             (control reaches end of non void function) so I am retuning 0 */
 }
 
 
+/* Ask the user a question and prompt for a Y or N (y or n) answer. No other answer will be acceptable. */
+/* Function returns 1 for a Y and 0 for a N. */
 
-// YesNo ()
-// Ask the user a question and prompt for a Y or N (y or n) answer. No other answer will be acceptable.
-// Function returns 1 for a Y and 0 for a N.
-
-int yesNo (char prompt [])                  // EXAMPLE SAYS IT NEEDS TO BE AN INTEGER FUNCTION
-// Prompt string to be passed in. Should not include a question mark.
+int yesNo (char prompt [])                  /* EXAMPLE SAYS IT NEEDS TO BE AN INTEGER FUNCTION
+                                             Prompt string to be passed in. Should not include a question mark. */
 
 {
     
     
     char buff[BUFSIZ];                      /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
-    //memset(buff,0,sizeof(buff));            /* set the buffer with all zeros so that there is no garbage values in the buffer before it is used. */
     char answer;
     
-    
-    
+                                            /* Read user input and loop until correct input given */
     for (; ;)
         
     {
-        fputs (prompt, stdout);             // Display the question to the user.
-        fputs (" Y/N? ", stdout);            // Add a space and then a helpful prompt to the string passed in.
+        fputs (prompt, stdout);             /* Display the question to the user. */
+        fputs (" Y/N? ", stdout);           /* Add a space and then a helpful prompt to the string passed in. */
         
         
         fgets( buff, sizeof buff, stdin );
-        sscanf( buff, " %[^\n]", &answer );  //ANSWER HERE IS A POINTER?
+        sscanf( buff, " %[^\n]", &answer );  /*ANSWER HERE IS A POINTER? */
         
         
         
         
         
         
-        // Process the Answer
+                                            /* Process the Answer */
         
         answer = toupper (answer);          /* Convert to uppercase. */
         if (answer == 'Y')
             return 1;                       /* Return is called here not at the end of the function! This is aparently fine to do. */
-        /*"else" is not required here. WHY?? */
-        if (answer == 'N')
+                                            /*"else" is not required here. WHY?? */
+        if (answer == 'N')                  /* "else" is not required here either. WHY?? */
             return 0;
         
-        /* "else" is not required here either. WHY?? */
+        
         
         
         printf("Error - only 'y/Y' or 'n/N' are allowed\n");    /* Error prompt on incorrect user input. */
-        /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
-         "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
-        /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk. Somehow this is getting put into bad memory addresses or something */
+        
+                                                                /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
+                                                                "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
+                                                                /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk.
+                                                                 Somehow this is getting put into bad memory addresses or something */
     }
     
 }
 
 
-
-/* readIntA () The simple version. I'm not sure if this is going to have a problem with the newline? If so use readIntB */
+/* Read Integer. The simple version. */
 /* I was having a problem for a long time that yesNo would fail and skip ahead every second call. I traced it to a newline being left from this integer read */
 /* Ask the user a question and read an integer answer from the keyboard. */
 /* This now works because while((c = getchar()) != '\n' && c != EOF); */
@@ -117,82 +115,71 @@ int readIntA (char prompt [])
     int answer;
     int c;
     
-    fputs (prompt, stdout);                 // Display the question to the user.
-    scanf( "%d", &answer );                 // Trying %d and ^\n here as I am looking for an integer.
+    fputs (prompt, stdout);                         /* Display the question to the user. */
+    scanf( "%d", &answer );                         /* Trying %d and ^\n here as I am looking for an integer. */
     while((c = getchar()) != '\n' && c != EOF);     /* Using this to eat the newline. It loops until it finds either a newline/return or EOF */
     
     
     return answer;
 }
 
-// readIntB () The more complicated version.
-// Ask the user a question and read an integer answer from the keyboard.
+/* Read Integer. The more complicated version. */
+                                                    /* Im not using this one as the simpler version works */
+                                                    /* Ask the user a question and read an integer answer from the keyboard. */
 
 int readIntB (char prompt [])
 {
-    char buff[BUFSIZ];                      //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h>
+    char buff[BUFSIZ];                              /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     int answer;
     
-    fputs (prompt, stdout);                 // Display the question to the user.
+    fputs (prompt, stdout);                         /* Display the question to the user. */
     fgets( buff, sizeof buff, stdin );
-    sscanf( buff, "%d[^\n]", &answer );     // Trying %d and ^\n here as I am looking for an integer.
+    sscanf( buff, "%d[^\n]", &answer );             /* Trying %d and ^\n here as I am looking for an integer. */
     
     return answer;
 }
 
-// readFloat ()
-// Ask the user a question and read a floating point answer from the keyboard.
+
+/* Ask the user a question and read a floating point answer from the keyboard. */
 
 
 float readFloat (char prompt [])
 {
-    char buff[BUFSIZ];                      //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h>
+    char buff[BUFSIZ];                              /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     float answer;
     
-    fputs (prompt, stdout);                 // Display the question to the user.
+    fputs (prompt, stdout);                         /* Display the question to the user. */
     fgets( buff, sizeof buff, stdin );
-    sscanf( buff, "%f[^\n]", &answer );     // Trying %d and ^\n here as I am looking for a float.
-    
+    sscanf( buff, "%f[^\n]", &answer );             /* Trying %d and ^\n here as I am looking for a float. */
     
     return answer;
 }
 
 
-// readString ()
-// Ask the user a question and prompt for a string answer.
-// In the provided solution Mark Virtue is using an entirely different solution which involves calling the function trimnewline and passing in the 'answer' variable from this function.
-// He is also using the parameter "MAX" to set the max read length. We dont need this as we are using "BUFSIZ"
+/* Ask the user to enter a string. */
+                                                    /* In the provided solution Mark Virtue is using an entirely different construct
+                                                     which involves calling the function trimnewline and passing in the 'answer' variable from this function.
+                                                     He is also using the parameter "MAX" to set the max read length. We dont need this as we are using "BUFSIZ" */
 
-int readString (char prompt [], char answer[]) // Functions cant return a string so we pass in another paramater "answer" which will be "modified" by the function when it runs.
-{                                               // HAD TO SET FUNCTION TYPE TO CHAR TO STOP IT RETURNING NUMBERS
-    char buff[BUFSIZ];                      //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h>
+int readString (char prompt [], char answer[])      /* Functions cant return a string so we pass in another paramater "answer"
+                                                     which will be "modified" by the function when it runs. */
+{                                                   /* HAD TO SET FUNCTION TYPE TO CHAR TO STOP IT RETURNING NUMBERS */
+    char buff[BUFSIZ];                              /* Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
     
-    
-    
-    fputs (prompt, stdout);                 // Display the question to the user.
+    fputs (prompt, stdout);                         /* Display the question to the user. */
     fgets( buff, sizeof buff, stdin );
-    sscanf( buff, "%[^\n]", answer );      // NOTE: NO AMPERSAND before answer. I had it in but comp complained so I took it out.
+    sscanf( buff, "%[^\n]", answer );               /* NOTE: NO AMPERSAND before answer. I had it in but compiler complained so I took it out. */
     
-    
-    
-    return 0;                               // NOTE: Mark shows no retun value but the compiler requires it (control reaches end of non void function) so I am retuning 0
-    
+    return 0;                                       /* NOTE: Mark shows no retun value but the compiler requires it
+                                                     (control reaches end of non void function) so I am retuning 0 */
 }
 
 
-
+                                        /* Main Function */
 
 int main()
 
 {
-    // Declare variables
-    
-    //char type;                // used to read in the album/single info !!and is used to read user input (y/n)!!
-    //char buff[BUFSIZ];    //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h>
-    
-    //char buff[BUFSIZ];    //Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> NOT USED IN THIS VERSION.
-    //This belongs to the new fgets procedure I am trying (see also above)(line 69 etc)
-    //char c;             //this varible belonged to the new while procedure I am using to discard the newline (line 79)
     
     char title [NO_CDS][TITLE_SIZE+1];     // Array of arrays for title
 #ifndef NOARTIST
