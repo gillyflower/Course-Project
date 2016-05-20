@@ -21,13 +21,49 @@
 
 
 
+
+
+
+
+                                        /* ------ Read CD -------*/
+
+
+cd_t read_cd ()                                           /* Function of type cd_t (cd_t BECOMES THE TYPE e.g. int, float, char through "typedef"
+                                                           which defines "sruct cd_type" as cd_t). This reads in the details of one CD */
+
+                                                        /* This calls the necessary functions e.g. "readIntA" and passes the retun values into the FIELDS
+                                                         of the struct e.g cd.tracks. NOT: Each struct is just one cd */
+{
+    
+    cd_t cd;
+    
+        /* Read in the details of the CD. */
+        readString ("Title?", cd.title);
+#ifndef NOARTIST
+        readString ("Artist?", cd.artist);
+#endif
+        cd.tracks  = readIntA("Number of tracks?");             /* Pass in the question we want to ask "Number of tracks"
+                                                                     and readIntA will echo this to the user and return their input to "tracks"*/
+        cd.album  = yesNo ("Is the CD an Album");               /* Note there is no question mark and space here as the function is doing that for us.
+                                                                     This is just to show it can be done that way. */
+        cd.price  = readFloat ("Retail price (e.g. 4,95)? ");
+        
+    
+        return cd;
+    
+}
+
+
+
+
+
                                         /* ------ Print to Screen -------*/
 
 int output (char title[], char artist[], int tracks, int album, float price)
 {
     puts ("=======================================");    /* Note puts automatically adds a newline to the output */
     printf ("Title: %s\n", title);
-#ifndef NOARTIST                                         /* Think this is a MACRO. I need to check this */
+#ifndef NOARTIST                                         /* This is an ifdef defined in the header file to ignore this code if NOARTIST is defined */
     printf ("Artist: %s\n", artist);
 #endif
     printf ("Number of Tracks: %d\n", tracks);
@@ -166,23 +202,18 @@ int main()
 
 {
     
-    char title [NO_CDS][TITLE_SIZE+1];              /* Array of arrays for title */
-#ifndef NOARTIST
-    char artist [NO_CDS][ARTIST_SIZE+1];            /* Array of arrays for artist */
-#endif
-    int tracks [NO_CDS];                            /* number of tracks on the album */
-    int album [NO_CDS];                             /* boolean - is album? */
-    float price [NO_CDS];                           /* float because it has decimal places */
+    cd_t cds [NO_CDS];                              /* An array of structures each containg one complete CD */
     int count =0;                                   /* The loop counter for inputting the CD details */
     int i;                                          /* The loop counter for outputting the CD details */
     
     
     puts ("============================\n");
     puts ("Welcome to the CD Database. \n");
-    printf ("You can store up to %lu CDs. \n", sizeof price/ sizeof price [0]); /* Compiler Required unsigned long (lu) because of "sizeof". Was int (%d) */
+    printf ("You can store up to %lu CDs. \n", sizeof cds / sizeof cds); /* HOW DOES THIS WORK?
+                                                                          Compiler Required unsigned long (lu) because of "sizeof". Was int (%d) */
     puts ("============================\n\n\n");
     
-    
+                                                /* Loop */
     
     for (; ;)                                                       /* forever loop until the user does not want to enter more CDs*/
     {                                                               /* Ask if the user want to enter another CD? */
@@ -193,16 +224,12 @@ int main()
         puts ("\n\n");
         printf ("Please enter the details of CD %d...\n\n", count+1);
         
-                                                                    /* Read in the details of the CD. */
-        readString ("Title?", title[count]);
-#ifndef NOARTIST
-        readString ("Artist?", artist[count]);
-#endif
-        tracks [count] = readIntA("Number of tracks?");             /* Pass in the question we want to ask "Number of tracks"
-                                                                     and readIntA will echo this to the user and return their input to "tracks"*/
-        album [count] = yesNo ("Is the CD an Album");               /* Note there is no question mark and space here as the function is doing that for us.
-                                                                     This is just to show it can be done that way. */
-        price [count] = readFloat ("Retail price (e.g. 4,95)? ");
+        
+                                                /* Read in the details of the CD. */
+        
+        
+        cds [count] = read_cd();                                    /* Call the function "read_cd" It returns 1 CD which we then place in the array cds
+                                                                     at the location "count" */
         
                                                                     /* Check to see if we have filled up the allocated array space. */
         if (++count == NO_CDS)                                      /* NOTE: The increment happens before the test. */
@@ -213,7 +240,7 @@ int main()
             break;
         }
     }
-                                                                    /* we print all the CDs to the screen */
+                                                /* we print all the CDs to the screen */
     
     for (i =0; i< count; i++)
     {
@@ -221,7 +248,8 @@ int main()
         printf ("\nThe details of CD number %d:\n", i+1);
         puts ("=======================================");                   /* Note puts automatically adds a newline to the output */
         
-        output (title[i], artist[i], tracks[i], album[i], price[i]);
+        print_cd(cds [i]);                                                  /* We pass in the ith element of the array cds to the function "print_cd" 
+                                                                             and it prints it out*/
         if (i< count -1)
             puts ("========================================\n");
         
