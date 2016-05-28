@@ -34,9 +34,15 @@ int main()
     
     puts ("============================\n");
     puts ("Welcome to the CD Database. \n");
-    printf ("You can store up to %lu CDs. \n", sizeof cds / sizeof cds); /* HOW DOES THIS WORK?
-                                                                          Compiler Required unsigned long (lu) because of "sizeof". Was int (%d) */
+    printf ("You can store up to %lu CDs. \n", sizeof cds / sizeof cds [0]); /* HOW DOES THIS WORK?
+                                                                          Compiler Required unsigned long (lu) because of "sizeof". Was int (%d)*/
+                                                                        /*I am getting an ERRONEOUS OUTPUT here it says "you can store up to 1 cds"
+                                                                         I see Marks program does the same thing though??*/
+                                                                        /* This used to be sizeof price / sizeof price [0] eg. size of the array price / sizeof the first element of that array. Now it is sizeof cds / sizeof cds which of course = 1 */
+                                                                        /* Yup! that was his mistake :) */
     puts ("============================\n\n\n");
+    
+    
     
                                                 /* Loop */
     
