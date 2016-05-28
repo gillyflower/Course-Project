@@ -30,19 +30,19 @@ int enter (char prompt [])
 
 
 
-/* ------ Read CD -------*/
+                            /* ------ Read CD -------*/
 
 
 cd_t read_cd ()                                           /* Function of type cd_t (cd_t BECOMES THE TYPE e.g. int, float, char through "typedef"
                                                            which defines "sruct cd_type" as cd_t). This reads in the details of one CD */
 
-/* This calls the necessary functions e.g. "readIntA" and passes the retun values into the FIELDS
- of the struct e.g cd.tracks. NOT: Each struct is just one cd */
+                                                        /* This calls the necessary functions e.g. "readIntA" and passes the retun values into the FIELDS
+                                                         of the struct e.g cd.tracks. NOTE: Each struct is just one cd */
 {
     
     cd_t cd;
     
-    /* Read in the details of the CD. */
+                            /* Read in the details of the CD. */
     readString ("Title?", cd.title);
 #ifndef NOARTIST
     readString ("Artist?", cd.artist);
@@ -60,9 +60,10 @@ cd_t read_cd ()                                           /* Function of type cd
 
 
 
-/* ------ Read Yes No -------*/
+                            /* ------ Read Yes No -------*/
 
-/* Returns 1 for a Y and 0 for a N. */
+                            /* Returns 1 for a Y and 0 for a N. */
+
 int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO BE AN INTEGER FUNCTION
                                                      Prompt string to be passed in. Should not include a question mark. */
 
@@ -77,30 +78,31 @@ int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO 
         fgets( buff, sizeof buff, stdin );
         sscanf( buff, " %[^\n]", &answer );         /*ANSWER HERE IS A POINTER? */
         
-        /* Process the Answer */
+                            /* Process the Answer */
+        
         answer = toupper (answer);                  /* Convert to uppercase. */
         if (answer == 'Y')
             return 1;                               /* Return is called here not at the end of the function! This is aparently fine to do. */
-        /*"else" is not required here. WHY?? */
+                                                    /*"else" is not required here. WHY?? */
         if (answer == 'N')                          /* "else" is not required here either. WHY?? */
             return 0;
         
         printf("Error - only 'y/Y' or 'n/N' are allowed\n");    /* Error prompt on incorrect user input. */
         
-        /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
-         "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
-        /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk.
-         Somehow this is getting put into bad memory addresses or something */
+                                                                /* THIS IS PRODUCING ERRONEOUS OUTPUT. If the answer is not y or n the prompt is followed by
+                                                                 "Database" or sometimes "atabase". It seems something is remaining in the output buffer?? */
+                                                                /* Its worse than that Jim. I just managed to get it to crash by typing zukzukzukzuk.
+                                                                 Somehow this is getting put into bad memory addresses or something */
     }
     
 }
 
 
-/* ------ Read Integer -------*/
+                            /* ------ Read Integer -------*/
 
-/* I was having a problem for a long time that yesNo would fail and skip ahead every second call.
- I traced it to a newline being left from this integer read */
-/* This now works because while((c = getchar()) != '\n' && c != EOF); */
+                                                                /* I was having a problem for a long time that yesNo would fail and skip ahead every second call.
+                                                                I traced it to a newline being left from this integer read */
+                                                                /* This now works because while((c = getchar()) != '\n' && c != EOF); */
 
 int readIntA (char prompt [])
 {
@@ -114,9 +116,9 @@ int readIntA (char prompt [])
     return answer;
 }
 
-/* ------ Read Integer -------*/
+                            /* ------ Read Integer -------*/
 
-/* Im not using this one as the simpler version works */
+                                                    /* Im not using this one as the simpler version works */
 
 int readIntB (char prompt [])
 {
@@ -131,7 +133,7 @@ int readIntB (char prompt [])
 }
 
 
-/* ------ Read Float -------*/
+                            /* ------ Read Float -------*/
 
 
 float readFloat (char prompt [])
@@ -145,12 +147,12 @@ float readFloat (char prompt [])
     
     return answer;
 }
-/* ------ Resd String -------*/
+                            /* ------ Resd String -------*/
 
 
-/* In the provided solution Mark Virtue is using an entirely different construct
- which involves calling the function trimnewline and passing in the 'answer' variable from this function.
- He is also using the parameter "MAX" to set the max read length. We dont need this as we are using "BUFSIZ" */
+                                                    /* In the provided solution Mark Virtue is using an entirely different construct
+                                                     which involves calling the function trimnewline and passing in the 'answer' variable from this function.
+                                                     He is also using the parameter "MAX" to set the max read length. We dont need this as we are using "BUFSIZ" */
 
 int readString (char prompt [], char answer[])      /* Functions cant return a string so we pass in another paramater "answer"
                                                      which will be "modified" by the function when it runs. */
