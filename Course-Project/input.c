@@ -76,7 +76,7 @@ int yesNo (char prompt [])                          /* EXAMPLE SAYS IT NEEDS TO 
         fputs (prompt, stdout);                     /* Display the question to the user. */
         fputs (" Y/N? ", stdout);                   /* Add a space and then a helpful prompt to the string passed in. */
         fgets( buff, sizeof buff, stdin );
-        sscanf( buff, " %[^\n]", &answer );         /*ANSWER HERE IS A POINTER? */
+        sscanf( buff, " %[^\n]", &answer );         /*ANSWER HERE IS A POINTER? Yes. This says >>>"ADDRESS OF answer"<<< */
         
                             /* Process the Answer */
         
