@@ -8,7 +8,5 @@
 
 
 #include <stdio.h>
-#include <ctype.h>                                      /* Needed to use toupper */
-#include <string.h>                                     /* Needae for strlen */
 #include "CDdata.h"                                     /* The header file */
 

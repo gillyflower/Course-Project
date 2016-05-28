@@ -13,6 +13,21 @@
 
 
 
+/* ------ Prompt User -------*/
+
+int enter (char prompt [])
+{
+    char buff[BUFSIZ];                              /*Declares an array of size BUFFSIZ which is a constant defined in <stdio.h> */
+    
+    fputs (prompt, stdout);                         /* Prints the passed in prompt to the screen. */
+    fgets( buff, sizeof buff, stdin );              /* I'm sure there is an easier way to do this in this case. He is just collecting the "Return" character! */
+    sscanf( buff, "%*c");                           /* scan the keyboard buffer and throw awway the characters you find */
+    
+    return 0;                                       /* NOTE: Mark shows no retun value but the compiler requires it
+                                                     (control reaches end of non void function) so I am retuning 0 */
+}
+
+
 
 
 /* ------ Read CD -------*/
