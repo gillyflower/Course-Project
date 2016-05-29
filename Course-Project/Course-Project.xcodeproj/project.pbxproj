@@ -48,7 +48,6 @@
 		C8E064151CE896C2002C0737 = {
 			isa = PBXGroup;
 			children = (
-				C8E064331CE897B6002C0737 /* CDdata.h */,
 				C8E064201CE896C2002C0737 /* Course-Project */,
 				C8E0641F1CE896C2002C0737 /* Products */,
 			);
@@ -65,6 +64,7 @@
 		C8E064201CE896C2002C0737 /* Course-Project */ = {
 			isa = PBXGroup;
 			children = (
+				C8E064331CE897B6002C0737 /* CDdata.h */,
 				C8E064321CE897B6002C0737 /* main.c */,
 				C823DAC11CF9DF3E000C5554 /* input.c */,
 				C823DAC31CF9E0F6000C5554 /* output.c */,
